@@ -1,0 +1,42 @@
+<p?
+//Данные для подключения к серверу MySQL
+$servername = "localhost";
+$username = "root";
+$password = "";
+// Вводим название базы данных
+$dbname = "register_forms";
+//Созданиие подключения
+$conn = mysqli_connect($servername, $username, $password,
+$dbname);
+mysql_select_db('register_forms');
+//Проверка кодировки utf8 
+mysql_query('SET NAMES utf8') or die ("не удалось установить
+кодировку");
+//Проверка соединения с БД
+if (!$conn) {
+ die("Подключение не выполнено: " . mysqli_connect_error());
+}
+//Строка с текстом sql запроса для таблицы
+$sql = "INSERT INTO register_data (fioRus, fioEng, section,
+doclad, nameOrganization, addressOrganization, phoneNotify,
+emailNotify, loginNotify, parolNotify, factAddress, dateBirth,
+resident, bestColor);
+VALUES ('".$_POST['fioRus']."','".$_POST['fioEng']."',
+'".$_POST['section']."','".$_POST['doclad']."',
+'".$_POST['nameOrganization']."','".$_POST['addressOrganization']."',
+'".$_POST['phoneNotify']."','".$_POST['emailNotify']."',
+'".$_POST['loginNotify']."','".$_POST['parolNotify']."',
+'".$_POST['factAddress']."', '".$_POST['dateBirth']."',
+'".$_POST['resident']."','".$_POST['bestColor']."')" ;
+// mysqli_query($conn, $sql) - выполнение sql запроса
+//Проверка статуса выполнения sql запроса
+if (mysqli_query($conn, $sql)) {
+ echo "Запись успешно добавлена</br>";
+echo "<a href='registerform.html'>На главную</a>";
+} else {
+ echo "Ошибка добавления записи: " . $sql . "<br>" .
+mysqli_error($conn);
+}
+//Закрытие соединения
+mysqli_close($conn);
+?>
